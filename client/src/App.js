@@ -36,6 +36,8 @@ function App() {
   
    data.forEach(d=>{
      d.month = formatMonth(new Date(d.date))
+     if(d.month==='May')
+      d.month = 'June'
    })
    const months = d3.map(data, d => d.month).keys()
    var mixedChartData = []
@@ -244,14 +246,14 @@ function App() {
         const type2 = monthData.filter(d=>{return d.type === 'baseline'})
         const totalConversion = d3.sum(type1, d=>{return +d.attributed_conversions})
         const totalRevenue = d3.sum(type2, d=>{return +d.attributed_conversions})
-      var data ={incrementality:totalConversion, baseline: totalRevenue}
+      var data ={incremental:totalConversion, baseline: totalRevenue}
 
 
       const total = totalConversion+totalRevenue;
 
       // set the color scale
       var color = d3.scaleOrdinal()
-      .domain(["incrementality", "baseline"])
+      .domain(["incremental", "baseline"])
       .range(d3.schemeDark2);
 
       // Compute the position of each group on the pie:
